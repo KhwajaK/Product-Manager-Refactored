@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import ProductForm from '../components/ProductForm';
 import ProductList from '../components/ProductList';
+
 // import ProductDetails from '../components/ProductDetails'
 
 const Main = () => {
@@ -13,13 +14,12 @@ const Main = () => {
             setProductList(res.data)
         })
         .catch((err)=> console.log(err))
-    })
+    }, [])
 
     const createProduct = (productParam) => {
-        axios.post("http://localhost:8000/api/products", { productParam
-            // title,
-            // price,
-            // description
+        console.log("before post in main", productParam)
+        axios.post("http://localhost:8000/api/products", { ...productParam
+            // title, price,description
         })
         .then(res => {
             console.log(res);
@@ -28,25 +28,25 @@ const Main = () => {
             })
             .catch(err =>{
                 console.log(err);
-                setErrors(err.response.data.errors)
             })
-        // setTitle("")
-        // setPrice("")
-        // setDescription("")
+        // setTitle("") setPrice("")setDescription("")
     };
 
     const removeProduct = itemId => {
-        axios.delete("http://localhost:8000/api/products/" + id)
-        .then(res => {
-            console.log(res);
-            console.log(res.data); 
-        setProductList(productList.filter(item => item._id !== itemId));
-        })
-        .catch(err => console.log(err))
-        }
+        console.log(itemId)
+        // axios.delete("http://localhost:8000/api/products/" + itemId)
+        // .then(res => {
+        //     console.log(res);
+        //     console.log(res.data); 
+    // } ) 
+        setProductList(productList.filter(item => item._id !== itemId));}
+        // })
+        // .catch(err => console.log(err))
+        
 
     return (
     <div>
+        <h1>Product Manager</h1>
         <ProductForm onSubmitProp={createProduct} initialTitle="" initialPrice="" initialDescription="" />
         <hr />
         <ProductList productList={productList} removeProduct={removeProduct}/>

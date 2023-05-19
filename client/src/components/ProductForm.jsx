@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 
 const ProductForm = (props) => {
     const {initialTitle, initialPrice, initialDescription, onSubmitProp} =props;
+
     const [title, setTitle] = useState(initialTitle);
     const [price, setPrice] = useState(initialPrice);
     const [description, setDescription] = useState(initialDescription);
@@ -10,7 +11,10 @@ const ProductForm = (props) => {
 
     const onSubmitHandler = e => {
         e.preventDefault();
+        console.log("submit handler in product form", {title, price, description} )
         onSubmitProp({title, price, description});
+        // createProduct({title, price, description})
+
     }
 
     // NOW IN MIAN.JS
@@ -36,7 +40,6 @@ const ProductForm = (props) => {
 
     return (
         <div className='container'>
-            <h1 className='mb-3'>Product Manager</h1>
             <form onSubmit={onSubmitHandler}>
                 { errors.title ? 
                 <h3>{errors.title.message}</h3>
